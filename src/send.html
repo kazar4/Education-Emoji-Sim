@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iMessage-like Chat</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    #nameInput, #colorSelect {
+        width: calc(50% - 10px);
+        padding: 12px 20px;
+        margin: 20px 0;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        color: #333;
+        /* background-color: #fff; */
+        outline: none;
+    }
+    #colorSelect {
+        margin-left: 10px;
+    }
+
+    select{
+    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 95% 50%;
+    background-color: white;
+    -moz-appearance: none; 
+    -webkit-appearance: none; 
+    appearance: none;
+    /* and then whatever styles you want*/
+}
+
+    #emojiInput > input {
+        width: calc(50% - 10px);
+        padding: 12px 20px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        color: #333;
+        /* background-color: #fff; */
+        outline: none;
+    }
+
+    #sendButtonContainer {
+        text-align: right;
+    }
+
+    #sendButtonContainer > input {
+        /* width: calc(50% - 10px); */
+        padding: 12px 20px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        /* background-color: #fff; */
+        outline: none;
+
+        border-radius: 20px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-align: right;
+    }
+
+    .green {
+        background-color: #00e34d;
+        border-bottom-right-radius: 20px 0px\9;
+    }
+    .blue {
+        background-color: #007bff;
+        border-bottom-right-radius: 20px 0px\9;
+    }
+    .grey {
+        background-color: #7e8183;
+        border-bottom-right-radius: 20px 0px\9;
+    }
+
+  
+    input[type="submit"]:hover {
+   
+    }
+
+    
+    .message-container {
+        overflow: hidden;
+        /* margin-top: 20px; */
+    }
+    .message {
+        float: left;
+        clear: both;
+        max-width: 70%;
+        padding: 10px 15px;
+        margin: 5px 0;
+        border-radius: 20px;
+        /* background-color: #007bff; */
+        color: white;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    .input-container {
+        display: flex;
+    }
+
+    #coolContainer {
+        display: flex;
+    }
+
+    #sendButtonContainer {
+
+    }
+
+    #emojiInput {
+        margin-right: auto;
+    }
+
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="message-container">
+        <div id="classMessage" class="message blue">Hi EDUC 560!</div>
+    </div>
+    <form id="chatForm" onsubmit="sendMessage(); return false">
+
+        <div class="input-container">
+            <input type="text" id="nameInput" placeholder="Your Name">
+            <select id="colorSelect" onchange="updateSendButtonColor()">
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+            </select>
+        </div>
+
+        <div id="coolContainer">
+            <span id="emojiInput">
+                <input id="emojiTextBox" type="text" oninput="checkText()" placeholder="Emoji">
+            </span>
+    
+            <span id="sendButtonContainer">
+                <input id="sendButton" class="grey" type="submit" value="Send">
+            </span>
+        </div>
+    </form>
+</div>
+</body>
+
+<script>
+    function updateSendButtonColor() {
+        var colorSelect = document.getElementById("colorSelect");
+
+        var classMessage = document.getElementById("classMessage");
+        var sendButton = document.getElementById("sendButton");
+        var selectedColor = colorSelect.value;
+
+        classMessage.classList.remove("green", "blue");
+        classMessage.classList.add(selectedColor);
+
+        sendButton.classList.remove("green", "blue");
+        sendButton.classList.add(selectedColor);
+    }
+
+    function checkText() {
+        var emojiText = document.getElementById("emojiTextBox");
+        var text = emojiText.value;
+        console.log(text)
+
+        var colorSelect = document.getElementById("colorSelect");
+        var selectedColor = colorSelect.value;
+
+        var sendButton = document.getElementById("sendButton");
+        if (text == "") {
+            sendButton.classList.remove("green", "blue");
+            sendButton.classList.add("grey");
+        } else {
+            sendButton.classList.remove("green", "blue", "grey");
+            sendButton.classList.add(selectedColor);
+        }
+
+    }
+
+    function sendMessage() {
+            // Get the name and emoji input values
+            var name = document.getElementById('nameInput').value;
+            var emoji = document.getElementById('emojiTextBox').value;
+            var colorSelect = document.getElementById("colorSelect");
+            var selectedColor = colorSelect.value;
+
+            if (name == undefined || emoji == undefined || name == "" || emoji == "") {
+                alert("please add a name and emoji")
+                return
+            }
+
+            // Create a WebSocket connection
+            var ws = new WebSocket('ws://localhost:8080');
+
+            // WebSocket connection opened
+            ws.onopen = function() {
+                // Send name and emoji data to the WebSocket server
+                ws.send(JSON.stringify({ name: name, emoji: emoji, color: selectedColor}));
+                
+                // Close the WebSocket connection
+                ws.close();
+
+                alert("Sent!")
+            };
+        }
+
+</script>
+
+</html>

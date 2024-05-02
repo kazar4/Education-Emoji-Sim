@@ -109,7 +109,7 @@ function processData(data) {
 }
 
 // Create a WebSocket connection
-var ws = new WebSocket('ws://localhost:8080');
+var ws = new WebSocket('wss://kazar4.com:8082');
 
 // WebSocket connection opened
 ws.onopen = function() {

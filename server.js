@@ -5,14 +5,13 @@ const GraphemeSplitter = require('grapheme-splitter')
 
 
 // Load SSL/TLS certificates
-const privateKey = fs.readFileSync('/path/to/private.key', 'utf8');
-const certificate = fs.readFileSync('/path/to/certificate.crt', 'utf8');
+const privateKey = fs.readFileSync('/ssl/server.key', 'utf8');
+const certificate = fs.readFileSync('/ssl/server.crt', 'utf8');
 
 const credentials = { key: privateKey, cert: certificate };
 
 // Create a WebSocket server over HTTPS
 const wss = new WebSocket.Server({ server: https.createServer(credentials) });
-
 
 // // Create a WebSocket server
 // const wss = new WebSocket.Server({ port: 8080 });

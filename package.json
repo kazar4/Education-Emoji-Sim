@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "grapheme-splitter": "^1.0.4",
     "ws": "^8.17.0"
   }
 }

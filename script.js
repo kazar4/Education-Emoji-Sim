@@ -13,14 +13,14 @@ Support : hi@vatanay.com
 */
 
 function responsiveChat(element) {
-    $(element).html('<form class="chat"><span></span><div class="messages"></div></form>');
+    $(element).html('<form class="chat"><span></span><div id="messagePane" class="messages"></div></form>');
 
     //<input type="text" placeholder="Your message"><input type="submit" value="Send">
 
-    function showLatestMessage(element) {
+    function showLatestMessage() {
       $('.responsive-html5-chat').find('.messages').scrollTop($('.responsive-html5-chat .messages')[0].scrollHeight);
     }
-    showLatestMessage(element);
+    showLatestMessage();
 
     // $(element + ' input[type="text"]').keypress(function (event) {
     //     if (event.which == 13) {
@@ -76,15 +76,17 @@ function responsiveChatPush(element, sender, origin, date, message) {
         originClass = 'fromThem';
     }
     $(element + ' .messages').append('<div class="message" onclick="removeMessage(this)"><div class="' + originClass + '"><p>' + message + '</p><date><b>' + sender + '</b> ' + date + '</date></div></div>');
+
+    $('.responsive-html5-chat').find('.messages').scrollTop($('.responsive-html5-chat .messages')[0].scrollHeight);
 }
 
 /* Activating chatbox on element */
 responsiveChat('.responsive-html5-chat');
 
 /* Let's push some dummy data */
-responsiveChatPush('.chat', 'Kate', 'me', '08.03.2017 14:30:7', 'Angel Said: 🔥');
-responsiveChatPush('.chat', 'John Doe', 'you', '08.03.2016 14:31:22', 'Kazen Said: 🫠');
-responsiveChatPush('.chat', 'Kate', 'me', '08.03.2016 14:33:32', 'Some Dude Said: 😎');
+// responsiveChatPush('.chat', 'Kate', 'me', '08.03.2017 14:30:7', 'Angel Said: 🔥');
+// responsiveChatPush('.chat', 'John Doe', 'you', '08.03.2016 14:31:22', 'Kazen Said: 🫠');
+// responsiveChatPush('.chat', 'Kate', 'me', '08.03.2016 14:33:32', 'Some Dude Said: 😎');
 // responsiveChatPush('.chat', 'Kate', 'me', '08.03.2016 14:36:4', 'Person Said: F0 9F 98 8E');
 // responsiveChatPush('.chat', 'John Doe', 'you', '08.03.2016 14:37:12', 'Your Mom Said: 🌞');
 
@@ -128,10 +130,19 @@ ws.onmessage = function(event) {
     console.log("\ud83d")
     console.log("\ud83d\udd25")
 
+    //message.name + ' Said: ' + 
+
+    //message.name + ' Said: ' + 
+
+    var d = new Date();
+    let time = (d.getHours() % 12 || 12) + ":" + (d. getMinutes() < 10 ? '0' : '') + d.getMinutes()
+
     if (message.color == "blue") {
-        responsiveChatPush('.chat', message.name, 'me', '08.03.2016 14:37:12', message.name + ' Said: ' + message.emoji);
+        responsiveChatPush('.chat', message.name, 'me', time, message.emoji);
+
+
     } else {
-        responsiveChatPush('.chat', message.name, 'you', '08.03.2016 14:37:12', message.name + ' Said: ' + message.emoji);
+        responsiveChatPush('.chat', message.name, 'you', time, message.emoji);
     }
 
 };

@@ -1,23 +1,38 @@
 const WebSocket = require('ws');
 const https = require('https');
 const fs = require('fs');
+const GraphemeSplitter = require('grapheme-splitter')
 
 
-// // Load SSL/TLS certificates
-// const privateKey = fs.readFileSync('/path/to/private.key', 'utf8');
-// const certificate = fs.readFileSync('/path/to/certificate.crt', 'utf8');
+// Load SSL/TLS certificates
+const privateKey = fs.readFileSync('/path/to/private.key', 'utf8');
+const certificate = fs.readFileSync('/path/to/certificate.crt', 'utf8');
 
-// const credentials = { key: privateKey, cert: certificate };
+const credentials = { key: privateKey, cert: certificate };
 
-// // Create a WebSocket server over HTTPS
-// const wss = new WebSocket.Server({ server: https.createServer(credentials) });
+// Create a WebSocket server over HTTPS
+const wss = new WebSocket.Server({ server: https.createServer(credentials) });
 
 
-// Create a WebSocket server
-const wss = new WebSocket.Server({ port: 8080 });
+// // Create a WebSocket server
+// const wss = new WebSocket.Server({ port: 8080 });
 
 // Store connected clients
 const clients = [];
+
+let binaryBool = false;
+
+let emojiSwitch = {
+    "👍":"👎",
+    "👍🏿": "👎🏻",
+    "👍🏾": "👎🏽",
+    "❤️": "🫀",
+    "✅": "💀",
+    "😂": "🖾",
+    "😭": "🧅",
+    "✔️": "💀",
+    "☑️": "💀"
+}
 
 // WebSocket server event listeners
 wss.on('connection', function connection(ws) {
@@ -25,8 +40,52 @@ wss.on('connection', function connection(ws) {
     clients.push(ws);
 
     ws.on('message', function incoming(message) {
+
+        let data = JSON.parse(message);
+
+        console.log(data)
+
+        if ('data' in data) {
+            if (data.data === "on") {
+                console.log("turning it on")
+                binaryBool = true;
+                return
+            } else if (data.data === "off") {
+                console.log("turning it off")
+                binaryBool = false;
+                return
+            }
+        }
+
         // Parse incoming message
-        const data = JSON.parse(message);
+
+
+        let splitter = new GraphemeSplitter();
+        // split the string to an array of grapheme clusters (one string each)
+        let graphemes = splitter.splitGraphemes(data.emoji);
+
+        data.emoji = graphemes[0]
+
+        function hex2bin(hex){
+            return (parseInt(hex, 16).toString(2)).padStart(8, '0');
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        if (data.emoji in emojiSwitch) {
+            data.emoji = emojiSwitch[data.emoji]
+        }
+
+        if (binaryBool == true) {
+            let hexValue = data.emoji.codePointAt(0).toString(16)
+            let binValue = hex2bin(hexValue)
+
+            if (getRandomInt(3) == 0) {
+                data.emoji = binValue
+            }
+        }
 
         // Broadcast message to all connected clients except the sender
         wss.clients.forEach(function each(client) {

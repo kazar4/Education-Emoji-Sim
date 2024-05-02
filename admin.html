@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebSocket Control</title>
+</head>
+<body>
+<h2>Click the button a few times for it to work idk why</h2>
+<button id="onButton"><h1>On</h1></button>
+<button id="offButton"><h1>Off</h1></button>
+
+<script>
+  const onButton = document.getElementById('onButton');
+  const offButton = document.getElementById('offButton');
+
+  // WebSocket connection
+  const socket = new WebSocket('ws://localhost:8080');
+
+  // Function to send message
+  function sendMessage(message) {
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(message);
+    } else {
+      console.error('WebSocket connection is not open.');
+    }
+  }
+
+  // Event listeners for button clicks
+  onButton.addEventListener('click', () => {
+    sendMessage(JSON.stringify({ data: "on"}));
+    sendMessage(JSON.stringify({ data: "on"}));
+    sendMessage(JSON.stringify({ data: "on"}));
+  });
+
+  offButton.addEventListener('click', () => {
+    sendMessage(JSON.stringify({ data: "off"}));
+    sendMessage(JSON.stringify({ data: "off"}));
+    sendMessage(JSON.stringify({ data: "off"}));
+  });
+</script>
+
+</body>
+</html>

@@ -198,7 +198,7 @@ form.chat .myMessage date {
 }
 
 form.chat .fromThem date {
-  right: 105%;
+  /* right: 105%; */
 }
 
 form.chat input{
@@ -224,7 +224,7 @@ form.chat input[type='submit']{
 }
 
   form.chat .myMessage,form.chat .fromThem{
-    font-size:30px;
+    font-size:65px;
   }
   
   form.chat .message:hover .myMessage{
@@ -237,10 +237,16 @@ form.chat input[type='submit']{
     -webkit-transform: translateY(18px);
   }
   
-  form.chat .myMessage date,form.chat .fromThem date {
+  form.chat .myMessage date {
     top: -20px;
     left:auto;
     right:0;
+    font-size:12px;
+  }
+  form.chat .fromThem date {
+    top: -20px;
+    left:auto;
+    right:auto;
     font-size:12px;
   }
   
@@ -302,7 +308,7 @@ form.chat input[type='submit']{
 /* DEMO */
 .iphone{
   width: 90%;
-  height: 100%;
+  height: 88%;
   /* background-image:url('http://www.adobewordpress.com/tasarim/images/iphone6.png'); */
   background-size:100% 100%;
   background-color: rgb(219, 225, 235);

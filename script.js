@@ -138,11 +138,11 @@ ws.onmessage = function(event) {
     let time = (d.getHours() % 12 || 12) + ":" + (d. getMinutes() < 10 ? '0' : '') + d.getMinutes()
 
     if (message.color == "blue") {
-        responsiveChatPush('.chat', message.name, 'me', time, message.emoji);
+        responsiveChatPush('.chat', message.name, 'me', time, message.name + ' Said: ' + message.emoji);
 
 
     } else {
-        responsiveChatPush('.chat', message.name, 'you', time, message.emoji);
+        responsiveChatPush('.chat', message.name, 'you', time, message.name + ' Said: ' + message.emoji);
     }
 
 };

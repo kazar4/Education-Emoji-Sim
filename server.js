@@ -30,7 +30,10 @@ let emojiSwitch = {
     "😂": "🖾",
     "😭": "🧅",
     "✔️": "💀",
-    "☑️": "💀"
+    "☑️": "💀",
+    "👀": "🫠"
+
+
 }
 
 // WebSocket server event listeners
@@ -103,4 +106,4 @@ wss.on('connection', function connection(ws) {
     });
 });
 
-console.log('WebSocket server started on port 8080');
+console.log('WebSocket server started on port 8082');

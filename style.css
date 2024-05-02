@@ -224,7 +224,7 @@ form.chat input[type='submit']{
 }
 
   form.chat .myMessage,form.chat .fromThem{
-    font-size:65px;
+    font-size:40px;
   }
   
   form.chat .message:hover .myMessage{

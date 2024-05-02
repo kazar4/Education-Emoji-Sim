@@ -31,9 +31,8 @@ let emojiSwitch = {
     "😭": "🧅",
     "✔️": "💀",
     "☑️": "💀",
-    "👀": "🫠"
-
-
+    "👀": "🫠",
+    "🔥": "🥹"
 }
 
 // WebSocket server event listeners
@@ -76,13 +75,14 @@ wss.on('connection', function connection(ws) {
             return Math.floor(Math.random() * max);
         }
 
-        if (data.emoji in emojiSwitch) {
-            data.emoji = emojiSwitch[data.emoji]
-        }
-
+    
         if (binaryBool == true) {
             let hexValue = data.emoji.codePointAt(0).toString(16)
             let binValue = hex2bin(hexValue)
+
+            if (data.emoji in emojiSwitch) {
+                data.emoji = emojiSwitch[data.emoji]
+            }
 
             if (getRandomInt(3) == 0) {
                 data.emoji = binValue

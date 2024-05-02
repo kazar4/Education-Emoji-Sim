@@ -11,7 +11,7 @@ const certificate = fs.readFileSync('/ssl/server.crt', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 
 // Create a WebSocket server over HTTPS
-const wss = new WebSocket.Server({ port: 8082, server: https.createServer(credentials) });
+const wss = new WebSocket.Server({ server: https.createServer(credentials).listen(8082) });
 
 // // Create a WebSocket server
 // const wss = new WebSocket.Server({ port: 8080 });
